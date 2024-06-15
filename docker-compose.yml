@@ -70,7 +70,7 @@ services:
       - MARIADB_ROOT_USERNAME=${MARIADB_USERNAME}
       - MARIADB_ROOT_PASSWORD=${MARIADB_PASSWORD}
     ports:
-      - "#{MARIADB_PORT}:3306"
+      - "${MARIADB_PORT}:3306"
     volumes: 
       - database:/data/db
     networks: 

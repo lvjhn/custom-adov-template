@@ -1,15 +1,18 @@
 import BaseModel from "#models/_BaseModel_"
 import { Model } from "objection"
 
-export default class Post extends BaseModel
+export default class {{ modelName }} extends BaseModel
 {
+    @each(column in columns) 
+    declare {{column}} : any
+    @end
 
     static get tableName() {
-        return "posts"
+        return "{{ tableName ?? snakeCase(modelName) }}"
     }
 
     static get idColumn() {
-        return "id"
+        return "{{ idColumn ?? 'id'}}"
     }
 
     static get relationMappings() {

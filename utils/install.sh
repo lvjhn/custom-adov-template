@@ -25,6 +25,7 @@ function install {
     install_adonisjs 
     install_vuejs 
     setup_docker
+    install_objectionjs
 }
 
 function install_adonisjs {
@@ -68,19 +69,30 @@ function setup_docker {
     if [ ! -f "./aovd/docker-ready" ] ; then 
         echo -e "\t| Setting for backend"
         python3 utils/installer/setup_docker_backend.py > ./backend/Dockerfile 
-        mkdir ./backend/utils/
+        if [ ! -d ./backend/utils ]; then
+            mkdir ./backend/utils/
+        fi
         touch ./backend/utils/start.sh
 
         echo -e "\t| Setting for frontend"
-        python3 utils/installer/setup_docker_frontend.py > ./frontend/Dockerfile 
-        mkdir ./frontend/utils 
+        python3 utils/installer/setup_docker_frontend.py > ./frontend/Dockerfile
+        if [ ! -d ./backend/utils ]; then 
+            mkdir ./frontend/utils 
+        fi
         touch ./frontend/utils/start.sh 
 
         echo -e "\t| Setting up docker-compose.yml" 
-        python3 utils/installer/setup_docker_compose.py > ./docker.compose.yml
+        python3 utils/installer/setup_docker_compose.py > ./docker-compose.yml
     else 
         echo -e "\t| Docker already set up." 
     fi
+}
+
+function install_objectionjs {
+    display_header "| @ Installing objection.js" 
+    echo
+
+    bash ./utils/install-objection.sh
 }
 
 main
