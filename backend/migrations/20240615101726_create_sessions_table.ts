@@ -10,6 +10,8 @@ export async function up(knex: Knex): Promise<void> {
         table.bigInteger("_ip_address_id")         // foreign
         table.timestamps()
 
+        table.unique("id")
+
         table
             .foreign("_client_id")
             .references("_clients.id")

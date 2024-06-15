@@ -3,16 +3,19 @@ import type { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable("_confirmation_tokens", (table) => {
-        table.uuid("id").primary().unique()
+        table.uuid("id").primary()
         table.bigInteger("_email_id")           // foreign
         table.string("token", 7)
         table.string("type", 64)
         table.timestamps() 
-
+        
+        table.unique("id")
+        
         table 
             .foreign("_email_id")
             .references("_emails.id")
             .deferrable("deferred")
+        
     })
 }
 
